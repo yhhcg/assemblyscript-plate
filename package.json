@@ -1,0 +1,19 @@
+{
+  "name": "assemblyscript-plate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "asbuild": "asc module.ts -b dist/module.wasm -O3",
+    "start": "npm run asbuild && node node.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@assemblyscript/loader": "^0.18.15",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.18.15"
+  },
+  "description": ""
+}

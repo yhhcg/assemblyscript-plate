@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assemblyscript-plate</title>
+</head>
+<body>
+  <textarea id="output" style="height: 800px; width: 100%" readonly></textarea>
+</body>
+<script>
+  fetch('./dist/module.wasm').then(response =>
+    response.arrayBuffer()
+  ).then(bytes =>
+    WebAssembly.instantiate(bytes, {})
+  ).then(result => {
+    const exports = result.instance.exports;
+    const output = document.getElementById('output');
+    for (let i = 0; i <= 10; ++i) {
+      console.time(`wasm${i}`);
+      const value = exports.fib(i);
+      console.timeEnd(`wasm${i}`);
+      output.value += `fib(${i}) = ${value}\n`;
+    }
+  });
+</script>
+<script src="./fib.js"></script>
+<script>
+  for (let i = 0; i <= 10; ++i) {
+    console.time(`js${i}`);
+    const value = fib(i);
+    console.timeEnd(`js${i}`);
+    output.value += `fib(${i}) = ${value}\n`;
+  }
+</script>
+</html>
